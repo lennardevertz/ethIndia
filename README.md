@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a>
-    <img src="./public/safe_notifications.png" width="250">
+    <img src="./public/safe_notifications.png" width="350">
   </a>
   <h3 align="center">Safe Notifications</h3>
   <p align="center">
