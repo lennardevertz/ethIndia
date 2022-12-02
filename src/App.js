@@ -1,4 +1,4 @@
-import { ShowHideCTA, ShowHideMedia, ShowHideSubject} from './utils/functions';
+import { ShowHideCTA, ShowHideMedia, ShowHideSubject, dropHandler } from './utils/functions';
 import './App.css';
 
 function App() {
@@ -47,24 +47,24 @@ function App() {
       <input id="CTACheckbox" onClick={ShowHideCTA} type="checkbox" className="ml-4 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>
       <label htmlFor="CTACheckbox" className="ml-1 block text-sm text-gray-500">CTA</label>
    </div>
-   <div id="SubjectDiv" style={{display:'none'}}>
+   <div id="SubjectDiv" style={{display: 'none'}}>
       <label className="text-sm text-gray-500">Subject:</label>
-      <input id="SubjectInput"  name="password" type="text" className="mt-1 items-center justify-center rounded-md border border-gray-300 shadow-sm w-full px-3 py-2 text-black bg-white outline-0 w-full truncate-clip placeholder-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="New article on IDriss blog"/>
+      <input id="SubjectInput"  name="password" type="text" className="mt-1 items-center justify-center rounded-md border border-gray-300 shadow-sm w-full px-3 py-2 text-black bg-white outline-0 truncate-clip placeholder-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="New article on IDriss blog"/>
     </div>
-   <div id="MediaDiv" style={{display:'none'}} className="mt-2">
+   <div id="MediaDiv" style={{display: 'none'}} className="mt-2">
       <label className="text-sm text-gray-500">Media URL:</label>
-      <input id="MediaInput"  name="password" type="text" className="mt-1 items-center justify-center rounded-md border border-gray-300 shadow-sm w-full px-3 py-2 text-black bg-white outline-0 w-full truncate-clip placeholder-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="www.youtube.com/ri2b3ri23d"/>
+      <input id="MediaInput"  name="password" type="text" className="mt-1 items-center justify-center rounded-md border border-gray-300 shadow-sm w-full px-3 py-2 text-black bg-white outline-0 truncate-clip placeholder-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="www.youtube.com/ri2b3ri23d"/>
     </div>
-   <div id="CTADiv" style={{display:'none'}} className="mt-2">
+   <div id="CTADiv" style={{display: 'none'}} className="mt-2">
       <label className="text-sm text-gray-500">CTA:</label>
-      <input id="CTAInput"  name="password" type="text" className="mt-1 items-center justify-center rounded-md border border-gray-300 shadow-sm w-full px-3 py-2 text-black bg-white outline-0 w-full truncate-clip placeholder-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="https://twitter.com/IDriss_xyz/status/1581651925035978752"/>
+      <input id="CTAInput"  name="password" type="text" className="mt-1 items-center justify-center rounded-md border border-gray-300 shadow-sm w-full px-3 py-2 text-black bg-white outline-0 truncate-clip placeholder-gray-400 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="https://twitter.com/IDriss_xyz/status/1581651925035978752"/>
     </div>
 </div>
 
 {/* RECIPIENTS */}
 <div className="mt-2">
     <label className="text-sm text-gray-500">Recipients:</label>
-    <div id="RecipientsTextArea" className="mt-1">
+    <div id="RecipientsTextArea" className="mt-1" onDrop={dropHandler}>
       <textarea id="RecipientsTextAreaInner" required cols="20" rows="2" maxLength="45" className="placeholder-gray-400 placeholder:text-sm resize-none shadow-sm appearance-none border border-gray-300 rounded-md w-full h-48 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="geoist.eth&#10;geoist.lens&#10;@geoist_&#10;+16506655942&#10;hello@idriss.xyz&#10;0x88d7...9F75&#10;-------------- paste or drag a file here --------------&#10;&#10;"></textarea>
     </div>
 </div>
