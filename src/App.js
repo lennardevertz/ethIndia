@@ -10,6 +10,23 @@ function App() {
 </head>
 <body>
 
+{/* CONNECT WALLET */}
+<div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-end h-16">
+        <div className="ml-4 flex items-center md:ml-6">
+            <input id="connectWallet" type="submit" value="Connect Wallet" className="w-10/12 sm:w-full ml-6 sm:ml-4 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#11dd74] hover:bg-[#11cc74] hover:cursor-pointer"/>
+            <div id="connectedWallet" class="hidden flex w-10/12 sm:w-full ml-6 sm:ml-4 whitespace-nowrap inline-flex items-center justify-center px-2 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-900">
+                <input type="submit" value="0xcCE9...6a1f"/>
+                <div id="disconnectWallet" class="ml-1 items-center justify-center px-1 py-1 border border-transparent rounded-md shadow-sm bg-indigo-50 hover:cursor-pointer text-gray-500 hover:text-[#5865F2]">
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
+                   </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {/* INDEX */}
 <div id="Index" className="justify-center border-1 border-black w-96 rounded-md p-3 m-auto mt-10 shadow-2xl">
     <div className="items-center flex justify-between">
