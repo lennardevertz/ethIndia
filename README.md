@@ -17,7 +17,7 @@ Keep your web3 community up to date with on-chain and off-chain notifications de
 - [ENS](https://ens.domains/)
 - [IDriss](https://www.idriss.xyz/)
 
-<p style="font-size: 12px; margin-top: 30px;">The background image used in the logo was generated with <a href="https://www.craiyon.com/">DALL•E</a> text-to-image AI model. Prompt: illustration of a pigeon delivering a letter in an enchanting garden in India.</p>
+The background image used in the logo was generated with [DALL•E](https://www.craiyon.com/) text-to-image AI model. Prompt: illustration of a pigeon delivering a letter in an enchanting garden in India.</p>
 
 
 
