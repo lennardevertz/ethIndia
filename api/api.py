@@ -42,7 +42,7 @@ def send_mail_flask(to, template, content, subject="Someone just sent you a noti
         msg = Message(subject=subject, sender=(app.config['MAIL_DEFAULT_SENDER'], app.config['MAIL_USERNAME']),
                       recipients=[to])
         msg.body = content
-        msg.html = render_template(template, media=kwargs['url'], content=content, subject=subject)
+        msg.html = render_template(template, media=kwargs['url'], content=content, subject=subject, cta=kwargs['cta'])
         mail.send(msg)
         return True
     except Exception as e:
@@ -67,6 +67,7 @@ def send_off_chain_notifications():
         url_media = data_notification['media']
         title = data_notification['title']
         content = data_notification['content']
+        cta = data_notification['cta']
         identifier_map = data_notification['handles']
         print(url_media, title, content, identifier_map)
         identifier = list(identifier_map.values())
@@ -74,10 +75,10 @@ def send_off_chain_notifications():
         for name in identifier:
             if re.match(r"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$", name):
                 send_mail_flask(to=name, content=content, template="mailTemplate.html",
-                                subject=title, url=url_media)
+                                subject=title, url=url_media, cta=cta)
             elif re.match(r"^(\+\(?\d{1,4}\s?)\)?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$", name):
                 client.messages.create(
-                    body=content,
+                    body=title + "\n \n" + content,
                     from_='+447700170850',
                     to=name
                 )
@@ -96,7 +97,8 @@ def send_off_chain_notifications():
                         # sending the direct message
                         dm = t_api_send.send_direct_message(
                             recipient_id=recipientID,
-                            text=content,
+                            text=title + "\n \n" + content,
+                            ctas=[{"type": "web_url", "label": "Go", "url": cta}]
                             )
                     except Exception as e:
                         print("something wrong error ", str(e))

@@ -32,10 +32,25 @@ export function ShowHideCTA() {
     document.getElementById("CTAInput").focus();
 }
 
-// levertz: execute after success
-//document.getElementById("SuccessImage").style.display = "";
-//document.getElementById("Index").style.display = "none";
-//document.getElementById("ConnectWidget").style.display = "none";
+function showSuccess() {
+    
+    document.getElementById("SuccessImage").style.display = "";
+    document.getElementById("Index").style.display = "none";
+    document.getElementById("ConnectWidget").style.display = "none";
+    setTimeout(function(){
+        document.getElementById("SuccessImage").style.display = "none";
+        document.getElementById("Index").style.display = "";
+        document.getElementById("ConnectWidget").style.display = "";
+    },3000)
+    document.getElementById('SubjectInput').value = '';
+    document.getElementById('ContentTextAreaInner').value = '';
+    document.getElementById('MediaInput').value = '';
+    document.getElementById('CTAInput').value = '';
+    handles = [];
+    addresses = [];
+    potentialNotifications = [];
+    notFound = [];
+}
 
 function HideIntroImage() {
   setTimeout(function(){
@@ -53,9 +68,6 @@ export async function dropHandler (e)  {
     console.log("Event: ", e)
     let csvContent = await processCSVdrop(e);
     document.querySelector('#RecipientsTextAreaInner').innerHTML = csvContent;
-    await resolveHandles();
-    console.log(addresses);
-    await sendNotifications();
 }
 
 
@@ -129,6 +141,7 @@ export async function sendNotifications() {
     let title = document.getElementById('SubjectInput').value;
     let content = document.getElementById('ContentTextAreaInner').value;
     let mediaLink = document.getElementById('MediaInput').value;
+    let cta = document.getElementById('CTAInput').value;
     // // send on-chain notification with PUSH to addresses
     // let notifications = await PushAPI.payloads.sendNotification({
     //     signer,
@@ -141,7 +154,7 @@ export async function sendNotifications() {
     //     payload: {
     //       title: title,
     //       body: content,
-    //       cta: '',
+    //       cta: cta,
     //       img: mediaLink
     //     },
     //     recipients: recipients, // recipients addresses
@@ -149,18 +162,19 @@ export async function sendNotifications() {
     //     env: 'staging'
     //   });
 
-    await offChainNotification(potentialNotifications, title, content, mediaLink) // send off-chain notifications
+    await offChainNotification(potentialNotifications, title, content, mediaLink, cta) // send off-chain notifications
 
     document.getElementById("Spinner").style.display = "none";
     document.getElementById("ButtonText").style.display = "";
+    showSuccess();
 }
 
-async function offChainNotification(notifiedIDriss, title, content, media) {
+async function offChainNotification(notifiedIDriss, title, content, media, cta) {
     const url = '/api/notify'
 
     // post body data
     const handles = notifiedIDriss
-    const data = {"handles": handles, "title": title, "content": content, "media": media}
+    const data = {"handles": handles, "title": title, "content": content, "media": media, "cta": cta}
 
     // request options
     const options = {
@@ -194,6 +208,10 @@ export async function init(){
     // send ether and pay to change state within the blockchain.
     // For this, you need the account signer...
     signer = provider.getSigner()
+
+    await resolveHandles();
+    console.log(addresses);
+    await sendNotifications();
 
 
     // const providerOptions = {

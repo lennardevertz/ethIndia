@@ -91,7 +91,7 @@ function App() {
 </div>
 
 {/* SUCCESS IMAGE */}
-<div id="SuccessImage" className="hidden absolute w-full h-full flex items-center justify-center">
+<div id="SuccessImage" style={{display: 'none'}} className="absolute w-full h-full flex items-center justify-center">
 <img src={deliveredImage} className="border border-transparent rounded-md shadow-sm"/>
 </div>
 
