@@ -37,11 +37,13 @@ function showSuccess() {
     document.getElementById("SuccessImage").style.display = "";
     document.getElementById("Index").style.display = "none";
     document.getElementById("ConnectWidget").style.display = "none";
+
     setTimeout(function(){
         document.getElementById("SuccessImage").style.display = "none";
         document.getElementById("Index").style.display = "";
         document.getElementById("ConnectWidget").style.display = "";
     },3000)
+    
     document.getElementById('SubjectInput').value = '';
     document.getElementById('ContentTextAreaInner').value = '';
     document.getElementById('MediaInput').value = '';
