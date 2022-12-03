@@ -1,4 +1,4 @@
-import { ShowHideCTA, ShowHideMedia, ShowHideSubject, dropHandler } from './utils/functions';
+import { ShowHideCTA, ShowHideMedia, ShowHideSubject, dropHandler, init } from './utils/functions';
 import './App.css';
 
 function App() {
@@ -71,7 +71,7 @@ function App() {
 
 {/* CONNECT WALLET & SEND BUTTON */}
     <div className="flex justify-center mt-3">
-        <button type="button" className="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#11dd74] text-base font-medium text-white hover:bg-[#11cc74]">
+        <button onClick={init} type="button" className="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#11dd74] text-base font-medium text-white hover:bg-[#11cc74]">
             <span>Connect Wallet</span>
         </button>
     </div>
