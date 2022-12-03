@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.0.0",
+    "@gnosis.pm/safe-apps-provider": "^0.15.1",
+    "@gnosis.pm/safe-apps-react-sdk": "^4.6.2",
+    "@gnosis.pm/safe-react-components": "^1.2.0",
     "@pushprotocol/restapi": "^0.2.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

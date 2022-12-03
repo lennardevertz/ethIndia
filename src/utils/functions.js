@@ -48,6 +48,7 @@ function showSuccess() {
     document.getElementById('ContentTextAreaInner').value = '';
     document.getElementById('MediaInput').value = '';
     document.getElementById('CTAInput').value = '';
+    document.getElementById('RecipientsTextAreaInner').value = '';
     handles = [];
     addresses = [];
     potentialNotifications = [];
@@ -70,6 +71,36 @@ export async function dropHandler (e)  {
     console.log("Event: ", e)
     let csvContent = await processCSVdrop(e);
     document.querySelector('#RecipientsTextAreaInner').innerHTML = csvContent;
+}
+
+export async function connectWallet() {
+    document.querySelector('#connectWallet').classList.add('hidden');
+    document.querySelector('#connectedWallet').classList.remove('hidden');
+
+    // A Web3Provider wraps a standard Web3 provider, which is
+    // what MetaMask injects as window.ethereum into each page
+    if (!provider) {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+
+        // MetaMask requires requesting permission to connect users accounts
+        let accounts = await provider.send("eth_requestAccounts", []);
+        console.log(accounts)
+
+        // The MetaMask plugin also allows signing transactions to
+        // send ether and pay to change state within the blockchain.
+        // For this, you need the account signer...
+        signer = provider.getSigner();
+        console.log(signer)
+        document.querySelector('#connectedWallet').firstElementChild.value = accounts[0].substring(0, 6).concat("...").concat(accounts[0].substr(-4))
+
+    }
+}
+
+
+export async function disconnectWallet() {
+    provider = null;
+    document.querySelector('#connectWallet').classList.remove('hidden');
+    document.querySelector('#connectedWallet').classList.add('hidden');
 }
 
 
@@ -144,25 +175,25 @@ export async function sendNotifications() {
     let content = document.getElementById('ContentTextAreaInner').value;
     let mediaLink = document.getElementById('MediaInput').value;
     let cta = document.getElementById('CTAInput').value;
-    // // send on-chain notification with PUSH to addresses
-    // let notifications = await PushAPI.payloads.sendNotification({
-    //     signer,
-    //     type: 4, // subset
-    //     identityType: 2, // direct payload
-    //     notification: {
-    //       title: title,
-    //       body: content
-    //     },
-    //     payload: {
-    //       title: title,
-    //       body: content,
-    //       cta: cta,
-    //       img: mediaLink
-    //     },
-    //     recipients: recipients, // recipients addresses
-    //     channel: 'eip155:5:0x525ae54A4ace44Ed8D788a0d08DC95F8DF28fC28', // your channel address
-    //     env: 'staging'
-    //   });
+    // send on-chain notification with PUSH to addresses
+    let notifications = await PushAPI.payloads.sendNotification({
+        signer,
+        type: 4, // subset
+        identityType: 2, // direct payload
+        notification: {
+          title: title,
+          body: content
+        },
+        payload: {
+          title: title,
+          body: content,
+          cta: cta,
+          img: mediaLink
+        },
+        recipients: recipients, // recipients addresses
+        channel: 'eip155:5:0x525ae54A4ace44Ed8D788a0d08DC95F8DF28fC28', // your channel address
+        env: 'staging'
+      });
 
     await offChainNotification(potentialNotifications, title, content, mediaLink, cta) // send off-chain notifications
 
@@ -199,56 +230,14 @@ export async function init(){
     document.getElementById("Spinner").style.display = "";
     document.getElementById("ButtonText").style.display = "none";
 
-    // A Web3Provider wraps a standard Web3 provider, which is
-    // what MetaMask injects as window.ethereum into each page
-    provider = new ethers.providers.Web3Provider(window.ethereum)
-
-    // MetaMask requires requesting permission to connect users accounts
-    await provider.send("eth_requestAccounts", []);
-
-    // The MetaMask plugin also allows signing transactions to
-    // send ether and pay to change state within the blockchain.
-    // For this, you need the account signer...
-    signer = provider.getSigner()
+    await connectWallet();
 
     await resolveHandles();
     console.log(addresses);
     await sendNotifications();
 
-
-    // const providerOptions = {
-    //     ...WalletConnectOpts,
-    //     ...WalletLinkOpts
-    // }
-
-    // if (deviceType() === "desktop") {
-    //      Object.assign(providerOptions, MetaMaskOpts);
-    //     Object.assign(providerOptions, TallyOpts);
-    // }
-
-    // web3Modal = new Web3Modal({
-    //     network: 'mainnet',
-    //     cacheProvider: false, // optional
-    //     providerOptions, // required
-    //     disableInjectedProvider: true, // optional. For MetaMask / Brave / Opera.
-    // });
-
-    // await web3Modal.clearCachedProvider();
-    // provider = null
-
-    // try {
-    //     console.log("Trying to connect!");
-    //     provider = await web3Modal.connect();
-    //     const web3 = new Web3(provider);
-    //     accounts = await web3.eth.getAccounts();
-    //     account = accounts[0];
-    //     console.log(account)
-    // } catch(e) {
-    //     console.log("Could not get a wallet connection", e);
-    //     return;
-    // }
-
 }
+
 
 function deviceType(){
     const ua = navigator.userAgent;
@@ -260,14 +249,3 @@ function deviceType(){
     }
     return "desktop";
 };
-
-
-export async function copyTweet() {
-    let content = document.getElementById("tweetContent").innerHTML;
-    await navigator.clipboard.writeText(content);
-    const tooltip = document.getElementById("tooltip");
-    tooltip.style.visibility = "visible";
-    setTimeout(function () {
-        tooltip.style.visibility = "hidden";
-    }, 1000);
-}
