@@ -10,7 +10,7 @@ RUN yarn
 
 
 # Rebuild the source code only when needed
-FROM node:16-alpine AS builder
+FROM node:18.7.0 AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -30,7 +30,7 @@ RUN yarn build
 # RUN npm run build
 
 # Production image, copy all the files and run next
-FROM node:17.8.0 AS runner
+FROM node:18.7.0 AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
