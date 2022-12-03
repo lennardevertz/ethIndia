@@ -1,6 +1,7 @@
-import { ShowHideCTA, ShowHideMedia, ShowHideSubject, ConnectWallet, dropHandler, init } from './utils/functions';
+import { ShowHideCTA, ShowHideMedia, ShowHideSubject, ConnectWallet, HideIntroImage, dropHandler, init } from './utils/functions';
 import './App.css';
 import deliveredImage from './delivered.png';
+import introImage from './intro.png';
 
 function App() {
 
@@ -11,8 +12,13 @@ function App() {
 </head>
 <body>
 
+{/* INTRO IMAGE */}
+<div id="IntroImage" className="absolute w-full h-full flex items-center justify-center">
+<img src={introImage} className="w-96 border border-transparent rounded-md shadow-sm"/>
+</div>
+
 {/* CONNECT WALLET */}
-<div id="ConnectWidget" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div id="ConnectWidget" style={{display: 'none'}} className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="flex items-center justify-end h-16">
         <div className="ml-4 flex items-center md:ml-6">
             <input id="connectWallet" type="submit" value="Connect Wallet" className="w-10/12 sm:w-full ml-6 sm:ml-4 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#11dd74] hover:bg-[#11cc74] hover:cursor-pointer"/>
@@ -29,7 +35,7 @@ function App() {
 </div>
 
 {/* INDEX */}
-<div id="Index" className="justify-center border-1 border-black w-96 rounded-md p-3 m-auto mt-10 shadow-2xl">
+<div id="Index" style={{display: 'none'}} className="justify-center border-1 border-black w-96 rounded-md p-3 m-auto mt-10 shadow-2xl">
     <div className="items-center flex justify-between">
         <p className="text-lg leading-6 font-medium text-gray-900">Notify Your Community</p>
     </div>
@@ -84,7 +90,7 @@ function App() {
     </div>
 </div>
 
-{/* SUCCESS SCREEN */}
+{/* SUCCESS IMAGE */}
 <div id="SuccessImage" className="hidden absolute w-full h-full flex items-center justify-center">
 <img src={deliveredImage} className="border border-transparent rounded-md shadow-sm"/>
 </div>

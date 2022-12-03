@@ -42,6 +42,15 @@ export function ConnectWallet() {
 //document.getElementById("Index").style.display = "none";
 //document.getElementById("ConnectWidget").style.display = "none";
 
+function HideIntroImage() {
+  setTimeout(function(){
+    document.getElementById('IntroImage').style.display = "none";
+    document.getElementById('ConnectWidget').style.display = "";
+    document.getElementById('Index').style.display = "";
+  },3000)
+}
+
+window.onload = HideIntroImage;
 
 // add ondrop={} to element in app.js
 export async function dropHandler (e)  {
