@@ -37,6 +37,11 @@ export function ConnectWallet() {
     document.getElementById("ButtonText").style.display = "none";
 }
 
+// levertz: execute after success
+//document.getElementById("SuccessImage").style.display = "";
+//document.getElementById("Index").style.display = "none";
+//document.getElementById("ConnectWidget").style.display = "none";
+
 
 // add ondrop={} to element in app.js
 export async function dropHandler (e)  {
