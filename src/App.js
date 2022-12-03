@@ -29,7 +29,7 @@ function App() {
 </div>
 
 {/* INDEX */}
-<div id="Index" className="hidden justify-center border-1 border-black w-96 rounded-md p-3 m-auto mt-10 shadow-2xl">
+<div id="Index" className="justify-center border-1 border-black w-96 rounded-md p-3 m-auto mt-10 shadow-2xl">
     <div className="items-center flex justify-between">
         <p className="text-lg leading-6 font-medium text-gray-900">Notify Your Community</p>
     </div>
