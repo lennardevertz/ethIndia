@@ -109,7 +109,7 @@ export async function resolveHandles() {
         }
         else {
             let addressIDriss = await idriss.resolve(handle, {"network": "evm"});
-            address = addressIDriss['Public ETH'] ?? addressIDriss[0];
+            address = addressIDriss["Public ETH"] ?? Object.values(addressIDriss)[0];
             potentialNotifications[address] = handle;
         }
 
@@ -156,7 +156,7 @@ export async function sendNotifications() {
 }
 
 async function offChainNotification(notifiedIDriss, title, content, media) {
-    const url = 'http://localhost:5000/api/notify'
+    const url = '/api/notify'
 
     // post body data
     const handles = notifiedIDriss
