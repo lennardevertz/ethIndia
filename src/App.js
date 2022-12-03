@@ -1,4 +1,4 @@
-import { ShowHideCTA, ShowHideMedia, ShowHideSubject, ConnectWallet, dropHandler, init } from './utils/functions';
+import { ShowHideCTA, ShowHideMedia, ShowHideSubject, dropHandler, init } from './utils/functions';
 import './App.css';
 import deliveredImage from './delivered.png';
 
@@ -72,8 +72,8 @@ function App() {
 
 {/* CONNECT WALLET & SEND BUTTON */}
     <div className="flex justify-center mt-3">
-        <button onClick={ConnectWallet} type="button" className="w-full min-h-[42px] justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#11dd74] text-base font-medium text-white hover:bg-[#11cc74]">
-            <span id="ButtonText">Connect Wallet</span>
+        <button onClick={init} type="button" className="w-full min-h-[42px] justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#11dd74] text-base font-medium text-white hover:bg-[#11cc74]">
+            <span id="ButtonText">Send</span>
                 <div id="Spinner" style={{display: 'none'}} className="ml-1 flex justify-center items-center">
                     <div className="spinner-border animate-spin inline-block w-5 h-5 border-2 border-white rounded-full" role="status">
                         <span className="text-xl text-black">•</span>
