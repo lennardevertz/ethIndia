@@ -46,7 +46,7 @@ function App() {
     <div id="ContentTextArea" className="mt-1">
       <textarea id="ContentTextAreaInner" required cols="20" rows="2" maxLength="45" className="placeholder-gray-400 placeholder:text-sm resize-none shadow-sm appearance-none border border-gray-300 rounded-md w-full h-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="GM! We've just published the newest article on our blog. Check it out here."></textarea>
     </div>
-    <div className="mr-1 flex items-center justify-end">
+    <div className="mr-1 mt-1 flex items-center justify-end">
       <input id="SubjectCheckbox" onClick={ShowHideSubject} type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>
       <label htmlFor="SubjectCheckbox" className="ml-1 block text-sm text-gray-500">Subject</label>
       <input id="MediaCheckbox" onClick={ShowHideMedia} type="checkbox" className="ml-4 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>
