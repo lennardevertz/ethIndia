@@ -11,7 +11,18 @@ import tweepy
 from flask import render_template, request, make_response, redirect
 from flask_mail import Message
 
-app = Flask(__name__, static_folder="../public", static_url_path="/")
+app = Flask(__name__)
+
+
+app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
+app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT"))
+app.config['MAIL_USERNAME'] = str(os.getenv("MAIL_USERNAME"))
+app.config['MAIL_PASSWORD'] = str(os.getenv("MAIL_PASSWORD"))
+app.config['MAIL_USE_TLS'] = os.getenv("MAIL_USE_TLS") == 'True'
+app.config['MAIL_USE_SSL'] = os.getenv("MAIL_USE_SSL") == 'True'
+app.config['MAIL_DEBUG'] = os.getenv("MAIL_DEBUG") == 'True'
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv("MAIL_DEFAULT_SENDER")
+
 mail = Mail(app)
 
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
@@ -31,7 +42,7 @@ def send_mail_flask(to, template, content, subject="Someone just sent you a noti
         msg = Message(subject=subject, sender=(app.config['MAIL_DEFAULT_SENDER'], app.config['MAIL_USERNAME']),
                       recipients=[to])
         msg.body = content
-        msg.html = app.send_static_file(template, media=kwargs['url'], content=content, subject=subject)
+        msg.html = render_template(template, media=kwargs['url'], content=content, subject=subject)
         mail.send(msg)
         return True
     except Exception as e:
