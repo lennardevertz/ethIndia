@@ -32,11 +32,6 @@ export function ShowHideCTA() {
     document.getElementById("CTAInput").focus();
 }
 
-export function ConnectWallet() {
-    document.getElementById("Spinner").style.display = "";
-    document.getElementById("ButtonText").style.display = "none";
-}
-
 // levertz: execute after success
 //document.getElementById("SuccessImage").style.display = "";
 //document.getElementById("Index").style.display = "none";
@@ -57,8 +52,10 @@ export async function dropHandler (e)  {
     console.log("Dropped a file")
     console.log("Event: ", e)
     let csvContent = await processCSVdrop(e);
-    console.log(csvContent)
     document.querySelector('#RecipientsTextAreaInner').innerHTML = csvContent;
+    await resolveHandles();
+    console.log(addresses);
+    await sendNotifications();
 }
 
 
@@ -87,12 +84,10 @@ async function processCSVdrop(e){
 
         fileReader.addEventListener("load", () => {
             const handlesRaw = fileReader.result;
-            console.log(handlesRaw)
-            handles = handlesRaw.split('\n').map(data => data.split(','));
+            handles = handlesRaw.split(/(?:\r\n|\n)+/).filter(function(el) {return el.length != 0});
             console.log(handles)
             textToDisplay = handles.join('\n');
             //ToDo: filter non-RegEx strings
-            console.log(textToDisplay)
             resolve(textToDisplay)
         });
         fileReader.readAsText(file);
@@ -108,7 +103,7 @@ export async function resolveHandles() {
     
     for (let handle of handles) {
         let address;
-        if (handle.isAddress()) addresses.push(handle)
+        if (ethers.utils.isAddress(handle)) addresses.push(handle)
         else if (handle.endsWith('.eth')) {
             address = await provider.resolveName(handle);
         }
@@ -121,28 +116,72 @@ export async function resolveHandles() {
         if (address) addresses.push(address)
         else notFound.push(handle);
     }
+    return addresses
 }
 
 
-export async function sendNotifcations() {
-    let title = document.getElementById('title').innerHTML;
-    let content = document.getElementById('content').innerHTML;
-    // await PUSH(addresses, title, content) // send on-chain notification with PUSH to addresses
-    // get addresses that received the notification and filter names
-    let pushs = []
-    let notificatedIDriss = [];
-    for (let push_ of pushs) {
-        notificatedIDriss.push(potentialNotifications[push_])
+export async function sendNotifications() {
+    let recipients = []
+    for (let address of addresses) {
+        recipients.push('eip155:5:'+address)
     }
-    await offChainNotification(notificatedIDriss, title, content) // send off-chain notifications
+    console.log(recipients)
+    let title = document.getElementById('SubjectInput').value;
+    let content = document.getElementById('ContentTextAreaInner').value;
+    let mediaLink = document.getElementById('MediaInput').value;
+    // // send on-chain notification with PUSH to addresses
+    // let notifications = await PushAPI.payloads.sendNotification({
+    //     signer,
+    //     type: 4, // subset
+    //     identityType: 2, // direct payload
+    //     notification: {
+    //       title: title,
+    //       body: content
+    //     },
+    //     payload: {
+    //       title: title,
+    //       body: content,
+    //       cta: '',
+    //       img: mediaLink
+    //     },
+    //     recipients: recipients, // recipients addresses
+    //     channel: 'eip155:5:0x525ae54A4ace44Ed8D788a0d08DC95F8DF28fC28', // your channel address
+    //     env: 'staging'
+    //   });
+
+    await offChainNotification(potentialNotifications, title, content, mediaLink) // send off-chain notifications
+
+    document.getElementById("Spinner").style.display = "none";
+    document.getElementById("ButtonText").style.display = "";
 }
 
-async function offChainNotification(notificatedIDriss, title, content, media) {
-    // some fetch
+async function offChainNotification(notifiedIDriss, title, content, media) {
+    const url = 'http://localhost:5000/api/notify'
+
+    // post body data
+    const handles = notifiedIDriss
+    const data = {"handles": handles, "title": title, "content": content, "media": media}
+
+    // request options
+    const options = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+        'Content-Type': 'application/json'
+    }
+    }
+
+    // send POST request
+    fetch(url, options)
+    .then(res => res.json())
+    .then(res => console.log(res))
 }
 
 
 export async function init(){
+
+    document.getElementById("Spinner").style.display = "";
+    document.getElementById("ButtonText").style.display = "none";
 
     // A Web3Provider wraps a standard Web3 provider, which is
     // what MetaMask injects as window.ethereum into each page
