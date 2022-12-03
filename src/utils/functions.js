@@ -32,6 +32,11 @@ export function ShowHideCTA() {
     document.getElementById("CTAInput").focus();
 }
 
+export function ConnectWallet() {
+    document.getElementById("Spinner").style.display = "";
+    document.getElementById("ButtonText").style.display = "none";
+}
+
 
 // add ondrop={} to element in app.js
 export async function dropHandler (e)  {

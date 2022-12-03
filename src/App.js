@@ -1,4 +1,4 @@
-import { ShowHideCTA, ShowHideMedia, ShowHideSubject, dropHandler, init } from './utils/functions';
+import { ShowHideCTA, ShowHideMedia, ShowHideSubject, ConnectWallet, dropHandler, init } from './utils/functions';
 import './App.css';
 
 function App() {
@@ -15,11 +15,11 @@ function App() {
     <div className="flex items-center justify-end h-16">
         <div className="ml-4 flex items-center md:ml-6">
             <input id="connectWallet" type="submit" value="Connect Wallet" className="w-10/12 sm:w-full ml-6 sm:ml-4 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-[#11dd74] hover:bg-[#11cc74] hover:cursor-pointer"/>
-            <div id="connectedWallet" class="hidden flex w-10/12 sm:w-full ml-6 sm:ml-4 whitespace-nowrap inline-flex items-center justify-center px-2 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-900">
+            <div id="connectedWallet" className="hidden flex w-10/12 sm:w-full ml-6 sm:ml-4 whitespace-nowrap inline-flex items-center justify-center px-2 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-900">
                 <input type="submit" value="0xcCE9...6a1f"/>
-                <div id="disconnectWallet" class="ml-1 items-center justify-center px-1 py-1 border border-transparent rounded-md shadow-sm bg-indigo-50 hover:cursor-pointer text-gray-500 hover:text-[#5865F2]">
-                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
+                <div id="disconnectWallet" className="ml-1 items-center justify-center px-1 py-1 border border-transparent rounded-md shadow-sm bg-indigo-50 hover:cursor-pointer text-gray-500 hover:text-[#5865F2]">
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
                    </svg>
                 </div>
             </div>
@@ -71,8 +71,14 @@ function App() {
 
 {/* CONNECT WALLET & SEND BUTTON */}
     <div className="flex justify-center mt-3">
-        <button onClick={init} type="button" className="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#11dd74] text-base font-medium text-white hover:bg-[#11cc74]">
-            <span>Connect Wallet</span>
+        <button onClick={ConnectWallet} type="button" className="w-full min-h-[42px] justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#11dd74] text-base font-medium text-white hover:bg-[#11cc74]">
+            <span id="ButtonText">Connect Wallet</span>
+                <div id="Spinner" style={{display: 'none'}} className="ml-1 flex justify-center items-center">
+                    <div className="spinner-border animate-spin inline-block w-5 h-5 border-2 border-white rounded-full" role="status">
+                        <span className="text-xl text-black">•</span>
+                    </div>
+                    <span className="ml-1 text-white text-base font-medium sm:text-sm"></span>
+                </div>
         </button>
     </div>
 </div>
